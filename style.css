@@ -14,21 +14,26 @@
     display: flex;
     border: 1px green solid;
     text-align: center;
+    gap: 5px;
+    justify-content: space-between;
     
+}
+
+.second-row div {
+    flex: 1;
+    border: 1px yellow solid;
 }
 
 .operators {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    width: 100px;
     border: 1px green solid;
 }
 
 .operators > div {
-    flex: 1;
     border: 1px purple solid;
-    width: 100px;
+    gap: 5px;
 }
 
 .numbers {
