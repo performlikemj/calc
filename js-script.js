@@ -45,9 +45,11 @@ const numbers = document.querySelector('.numbers');
 
 for (let x=1; x<10; x++) {
   const number = document.createElement('div');
+  const para = document.createElement('p');
   number.classList.add('number');
   number.classList.add(x);
-  number.innerText = x;
+  para.innerText = x;
+  number.appendChild(para);
   numbers.appendChild(number);
 }
 
