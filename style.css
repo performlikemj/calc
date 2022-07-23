@@ -1,0 +1,48 @@
+.calc-body {
+    display: flex;
+    flex-direction: column;
+    border: 1px black solid;
+    height: 400px;
+    width: 350px;
+}
+
+.screen {
+    border: 1px green solid;
+}
+
+.second-row {
+    display: flex;
+    border: 1px green solid;
+    text-align: center;
+    
+}
+
+.operators {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100px;
+    border: 1px green solid;
+}
+
+.operators > div {
+    flex: 1;
+    border: 1px purple solid;
+    width: 100px;
+}
+
+.numbers {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    flex: 1;
+
+}
+
+.number {
+    border: 1px pink solid;
+    text-align: center;
+    flex: 100px;
+    width: 100px;
+
+}

@@ -29,3 +29,34 @@ function divide(...values) {
   return div;
 }
 
+function operate(symbol, number1, number2) {
+    if (symbol === '*') {
+        return multiply(Number(number1), Number(number2));
+    } else if (symbol === '/') {
+        return divide(Number(number1), Number(number2));
+    } else if (symbol === '+') {
+        return math(Number(number1), Number(number2));
+    } else if (symbol === '-') {
+        return subtract(Number(number1), Number(number2));
+    }
+}
+
+const numbers = document.querySelector('.numbers');
+
+for (let x=1; x<10; x++) {
+  const number = document.createElement('div');
+  number.classList.add('number');
+  number.classList.add(x);
+  number.innerText = x;
+  numbers.appendChild(number);
+}
+
+
+
+function screen(e){
+  console.log(e);
+}
+
+
+const nums = document.querySelectorAll('.number');
+nums.forEach(num => num.addEventListener('click', screen));
