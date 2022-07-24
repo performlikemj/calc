@@ -1,12 +1,3 @@
-// calc will require order of operations
-/* maybe i can find the symbols and then get the numbers to the left
-   and right of the symbols as parameter to function and then 
-   replace the 3 values including the symbol */
-
-/* add and subtract will take in a variable length in case user 
-   has many numbers
-   this can be done by storing the parameter values before sending to
-   function */
 function add(...values) {
   const sum = values.reduce((total, value) => total += value,  0);
   return sum;
@@ -35,7 +26,7 @@ function operate(symbol, number1, number2) {
     } else if (symbol === '/') {
         return divide(Number(number1), Number(number2));
     } else if (symbol === '+') {
-        return math(Number(number1), Number(number2));
+        return add(Number(number1), Number(number2));
     } else if (symbol === '-') {
         return subtract(Number(number1), Number(number2));
     }
@@ -53,12 +44,35 @@ for (let x=1; x<10; x++) {
   numbers.appendChild(number);
 }
 
+let placeholder = '';
+let symbol = '';
+let number1 = '';
+let number2 = '';
 
+function calculation() {
+  if (Number(this.innerText)) {
+    placeholder += this.innerText; 
+  } else if(this.innerText === '-' || this.innerText === '+' || this.innerText === '*' || this.innerText === '/'){
+    number1 = placeholder;
+    placeholder = '';
+    symbol = this.innerText;
+  } else if (this.innerText === 'Equal') {
+    number2 = placeholder;
+    placeholder = operate(symbol, number1, number2);
+  }
+  
+  return screen();
+}
 
-function screen(e){
-  console.log(e);
+function screen(){
+  const screen = document.querySelector('.screen');
+  // store operation in variables as i go. if the second operator is not +,-,*,/, then clear and
+  // new number
+  screen.innerText = placeholder;
 }
 
 
-const nums = document.querySelectorAll('.number');
-nums.forEach(num => num.addEventListener('click', screen));
+const nums = document.querySelectorAll('.number p');
+const ops = document.querySelectorAll('.second-row p')
+nums.forEach(num => num.addEventListener('click', calculation));
+ops.forEach(op => op.addEventListener('click', calculation))
