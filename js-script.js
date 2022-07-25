@@ -46,29 +46,79 @@ for (let x=1; x<10; x++) {
 
 let placeholder = '';
 let symbol = '';
-let number1 = '';
-let number2 = '';
+let data;
+let results = [];
+let screenView = '';
+let equalPressed = false;
+
+// function calculation() {
+//   if (Number(this.innerText)) {
+//     placeholder += this.innerText; 
+//   } else if(this.innerText === '-' || this.innerText === '+' || this.innerText === '*' || this.innerText === '/'){
+//     number1 = placeholder;
+//     placeholder = '';
+//     symbol = this.innerText;
+//   } else if (this.innerText === 'Equal') {
+//     number2 = placeholder;
+//     placeholder = operate(symbol, number1, number2);
+//     results.push(placeholder);
+//   }
+  
+//   return screen();
+// }
 
 function calculation() {
-  if (Number(this.innerText)) {
-    placeholder += this.innerText; 
-  } else if(this.innerText === '-' || this.innerText === '+' || this.innerText === '*' || this.innerText === '/'){
-    number1 = placeholder;
-    placeholder = '';
-    symbol = this.innerText;
+  if (this.innerText != 'Equal' && this.innerText != 'Clear') {
+    if (equalPressed) {
+      clearScreen();
+      equalPressed = false;
+    }
+    if (Number(this.innerText)) {
+      placeholder += this.innerText;
+      screenView += this.innerText;
+      if (symbol != '') {
+        data = placeholder.split(symbol);
+        if (symbol === '/' && data[1] === 0) {
+          screenView = 'You are really buggin';
+        } else {
+          results.push(operate(symbol, data[0], data[1]));
+          placeholder = results[results.length-1];
+        }
+
+      }
+    } else if(this.innerText === '-' || this.innerText === '+' || this.innerText === '*' || this.innerText === '/'){
+        symbol = this.innerText;
+        placeholder += symbol;  
+        screenView += symbol;
+    }
   } else if (this.innerText === 'Equal') {
-    number2 = placeholder;
-    placeholder = operate(symbol, number1, number2);
+    screenView = Math.round(results[results.length-1] * 1000000000000) / 1000000000000;
+    equalPressed = true;
+  } else if (this.innerText === 'Clear') {
+    clearScreen()
   }
-  
+
   return screen();
+}
+
+function clearScreen() {
+  placeholder = '';
+  screenView = '';
+  symbol = '';
+  if (results.length > 0){
+    results.splice(0, results.length);
+  }
 }
 
 function screen(){
   const screen = document.querySelector('.screen');
   // store operation in variables as i go. if the second operator is not +,-,*,/, then clear and
   // new number
-  screen.innerText = placeholder;
+  if (screenView === '') {
+    screen.innerText = 'Cleared';
+  } else {
+    screen.innerText = screenView;
+  }
 }
 
 
