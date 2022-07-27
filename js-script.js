@@ -49,7 +49,7 @@ let symbol = '';
 let data;
 let results = [];
 let screenView = '';
-let equalPressed = false;
+let sequenceDone = false;
 
 // function calculation() {
 //   if (Number(this.innerText)) {
@@ -69,17 +69,18 @@ let equalPressed = false;
 
 function calculation() {
   if (this.innerText != 'Equal' && this.innerText != 'Clear') {
-    if (equalPressed) {
+    if (sequenceDone) {
       clearScreen();
-      equalPressed = false;
+      sequenceDone = false;
     }
-    if (Number(this.innerText)) {
+    if (Number(this.innerText) || this.innerText === '0') {
       placeholder += this.innerText;
       screenView += this.innerText;
       if (symbol != '') {
         data = placeholder.split(symbol);
-        if (symbol === '/' && data[1] === 0) {
+        if (symbol === '/' && data[1] === '0') {
           screenView = 'You are really buggin';
+          sequenceDone = true;
         } else {
           results.push(operate(symbol, data[0], data[1]));
           placeholder = results[results.length-1];
@@ -91,9 +92,9 @@ function calculation() {
         placeholder += symbol;  
         screenView += symbol;
     }
-  } else if (this.innerText === 'Equal') {
+  } else if (this.innerText === 'Equal' && results.length > 0) {
     screenView = Math.round(results[results.length-1] * 1000000000000) / 1000000000000;
-    equalPressed = true;
+    sequenceDone = true;
   } else if (this.innerText === 'Clear') {
     clearScreen()
   }
@@ -105,6 +106,7 @@ function clearScreen() {
   placeholder = '';
   screenView = '';
   symbol = '';
+  data.splice(0, 2);
   if (results.length > 0){
     results.splice(0, results.length);
   }
@@ -123,6 +125,7 @@ function screen(){
 
 
 const nums = document.querySelectorAll('.number p');
-const ops = document.querySelectorAll('.second-row p')
+const ops = document.querySelectorAll('.second-row p');
+
 nums.forEach(num => num.addEventListener('click', calculation));
 ops.forEach(op => op.addEventListener('click', calculation))
